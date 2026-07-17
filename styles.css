@@ -106,6 +106,12 @@ body {
   transition: opacity 0.15s ease;
 }
 .buy-btn:hover { opacity: 0.85; }
+.buy-btn-disabled {
+  background: var(--border);
+  color: var(--muted);
+  cursor: default;
+}
+.buy-btn-disabled:hover { opacity: 1; }
 
 /* About */
 .about {
