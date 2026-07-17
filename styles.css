@@ -1,9 +1,9 @@
 :root {
-  --ink: #1c1a17;
-  --paper: #faf7f2;
-  --accent: #b5651d;
-  --muted: #6b6459;
-  --border: #e6ded2;
+  --ink: #111111;
+  --paper: #ffffff;
+  --accent: #111111;
+  --muted: #6b6b6b;
+  --border: #e2e2e2;
   --max-width: 1080px;
 }
 
@@ -44,14 +44,14 @@ body {
   margin-left: 24px;
   font-size: 0.95rem;
 }
-.site-header nav a:hover { color: var(--accent); }
+.site-header nav a:hover { color: var(--muted); }
 
 /* Book sections */
 .book {
   padding: 72px 0;
 }
 .book.alt {
-  background: #f2ede4;
+  background: #f7f7f7;
 }
 .book-grid {
   display: grid;
