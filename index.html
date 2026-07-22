@@ -21,6 +21,13 @@
 <meta name="twitter:image" content="https://www.yongjunzhu.com/assets/covers/book-1.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Preload the Latin subset of Google Sans Flex so it downloads in parallel
+     with the CSS, avoiding the fallback-font flash. The URL is version-pinned
+     (v21); if Google bumps the version this preload will 404 harmlessly and the
+     @font-face below still loads the current file — re-pin from the css2
+     response if the flash ever returns. -->
+<link rel="preload" as="font" type="font/woff2" crossorigin
+      href="https://fonts.gstatic.com/s/googlesansflex/v21/t5s6IQcYNIWbFgDgAAzZ34auoVyXkJCOvp3SFWJbN5hF8Ju1x6sKCyp0l9sI40swNJwInycYAJzz0m7kJ4qFQOJBOjLvDSndo0SKMpKSTzwliVdHAy4xyRg2eWQTmw.woff2">
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@100..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
