@@ -6,11 +6,17 @@
   --border: rgba(0, 0, 0, 0.08);
   --card: #ffffff;
   --btn-hover: #383838;
+  --cover-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
   --max-width: 1080px;
 }
 
+/* Dark palette, defined once and applied in two cases:
+   1. the OS prefers dark AND the visitor hasn't forced light via the toggle;
+   2. the visitor explicitly chose dark via the toggle (data-theme="dark").
+   The `:not([data-theme="light"])` guard lets a forced-light choice win even
+   on a dark OS. Kept as two selectors because one lives inside a media query. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --background: #0a0a0a;
     --foreground: #ededed;
     --muted: #a1a1aa;     /* zinc-400 */
@@ -18,7 +24,18 @@
     --border: rgba(255, 255, 255, 0.145);
     --card: #0a0a0a;
     --btn-hover: #cccccc;
+    --cover-shadow: 0 18px 44px rgba(0, 0, 0, 0.6);
   }
+}
+:root[data-theme="dark"] {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --muted: #a1a1aa;
+  --faint: #71717a;
+  --border: rgba(255, 255, 255, 0.145);
+  --card: #0a0a0a;
+  --btn-hover: #cccccc;
+  --cover-shadow: 0 18px 44px rgba(0, 0, 0, 0.6);
 }
 
 * { box-sizing: border-box; }
@@ -77,6 +94,36 @@ a { color: inherit; }
 }
 .site-header nav a:hover { color: var(--foreground); }
 
+/* Theme toggle — sits after "Books" in the nav, styled like a nav link.
+   The icon it shows reflects the *effective* theme via CSS alone: a moon in
+   light mode (tap to go dark), a sun in dark mode (tap to go light). */
+.theme-toggle {
+  margin-left: 22px;
+  padding: 4px;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  transition: color 0.15s ease;
+}
+.theme-toggle:hover { color: var(--foreground); }
+.theme-toggle svg { width: 18px; height: 18px; display: block; }
+/* Default (light OS, no choice) and forced-light: show moon, hide sun. */
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: block; }
+/* Effective dark: show sun, hide moon. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle .icon-sun { display: block; }
+  :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
+}
+:root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+:root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+:root[data-theme="light"] .theme-toggle .icon-sun { display: none; }
+:root[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+
 /* Intro */
 .intro {
   padding: 96px 0 24px;
@@ -133,10 +180,7 @@ a { color: inherit; }
   width: 100%;
   height: auto;
   border-radius: 10px;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
-}
-@media (prefers-color-scheme: dark) {
-  .book-cover img { box-shadow: 0 18px 44px rgba(0, 0, 0, 0.6); }
+  box-shadow: var(--cover-shadow);
 }
 
 .book-kicker {
