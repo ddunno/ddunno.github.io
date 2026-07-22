@@ -15,8 +15,8 @@
 </script>
 <title>yongjun zhu — Author</title>
 <meta name="description" content="Books by yongjun zhu — reflective writing on family, memory, and identity. Find links to read.">
-<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
+<!-- Light by default; JS updates this to match an explicit dark choice. -->
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
 <!-- Open Graph / social sharing -->
@@ -128,13 +128,20 @@
   document.getElementById('year').textContent = new Date().getFullYear();
 
   // Theme switch: each labelled option sets an explicit choice and remembers it.
+  // Light is the default (no OS following); dark applies only when chosen.
   (function () {
     var root = document.documentElement;
+    var meta = document.querySelector('meta[name="theme-color"]');
+    function syncThemeColor() {
+      if (meta) meta.content = root.getAttribute("data-theme") === "dark" ? "#0a0a0a" : "#ffffff";
+    }
+    syncThemeColor();
     document.querySelectorAll(".ts-opt").forEach(function (btn) {
       btn.addEventListener("click", function () {
         var choice = btn.getAttribute("data-theme-choice");
         root.setAttribute("data-theme", choice);
         try { localStorage.setItem("theme", choice); } catch (e) {}
+        syncThemeColor();
       });
     });
   })();

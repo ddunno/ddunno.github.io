@@ -13,26 +13,10 @@
   --max-width: 1080px;
 }
 
-/* Dark palette, defined once and applied in two cases:
-   1. the OS prefers dark AND the visitor hasn't forced light via the toggle;
-   2. the visitor explicitly chose dark via the toggle (data-theme="dark").
-   The `:not([data-theme="light"])` guard lets a forced-light choice win even
-   on a dark OS. Kept as two selectors because one lives inside a media query. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --muted: #a1a1aa;     /* zinc-400 */
-    --faint: #71717a;     /* zinc-500 */
-    --border: rgba(255, 255, 255, 0.145);
-    --card: #0a0a0a;
-    --btn-hover: #cccccc;
-    --cover-shadow: 0 18px 44px rgba(0, 0, 0, 0.6);
-    --switch-track: rgba(255, 255, 255, 0.08);
-    --switch-thumb: #303030;
-    --switch-thumb-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-  }
-}
+/* Light is the default for this site: the base :root palette above is light and
+   the OS `prefers-color-scheme` is intentionally NOT consulted, so every visitor
+   starts light regardless of their system setting. Dark applies only when the
+   visitor explicitly picks it with the switch (data-theme="dark"). */
 :root[data-theme="dark"] {
   --background: #0a0a0a;
   --foreground: #ededed;
@@ -142,21 +126,12 @@ a { color: inherit; }
   box-shadow: var(--switch-thumb-shadow);
   transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
-/* Default (light OS, no choice) and forced-light: thumb left, "light" active. */
+/* Default (light): thumb left, "light" active. */
 .ts-light { color: var(--foreground); }
-/* Effective dark: slide thumb right, make "dark" the active label. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .ts-thumb { transform: translateX(48px); }
-  :root:not([data-theme="light"]) .ts-light { color: var(--faint); }
-  :root:not([data-theme="light"]) .ts-dark { color: var(--foreground); }
-}
+/* Explicit dark choice: slide thumb right, make "dark" the active label. */
 :root[data-theme="dark"] .ts-thumb { transform: translateX(48px); }
 :root[data-theme="dark"] .ts-light { color: var(--faint); }
 :root[data-theme="dark"] .ts-dark { color: var(--foreground); }
-/* Forced light must win over a dark OS: reset to the default appearance. */
-:root[data-theme="light"] .ts-thumb { transform: translateX(0); }
-:root[data-theme="light"] .ts-light { color: var(--foreground); }
-:root[data-theme="light"] .ts-dark { color: var(--faint); }
 
 /* Intro */
 .intro {
