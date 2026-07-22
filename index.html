@@ -48,17 +48,6 @@
     <a class="brand" href="#top">yongjun zhu</a>
     <nav>
       <a href="#books">Books</a>
-      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
-        <!-- Moon (shown in light mode) -->
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
-        </svg>
-        <!-- Sun (shown in dark mode) -->
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="4.2"/>
-          <path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/>
-        </svg>
-      </button>
     </nav>
   </div>
 </header>
@@ -68,6 +57,14 @@
   <!-- ABOUT -->
   <section class="about" id="about">
     <div class="wrap about-wrap">
+      <!-- Apple-style sliding switch: a pill track with a thumb that slides
+           to the active label. Position + active label are driven by the
+           effective theme in CSS; the buttons set an explicit choice. -->
+      <div class="theme-switch" role="group" aria-label="Colour theme">
+        <span class="ts-thumb" aria-hidden="true"></span>
+        <button class="ts-opt ts-light" type="button" data-theme-choice="light">light</button>
+        <button class="ts-opt ts-dark" type="button" data-theme-choice="dark">dark</button>
+      </div>
       <p>someone thinks and writes.</p>
     </div>
   </section>
@@ -130,18 +127,15 @@
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Theme toggle: flip between the effective theme's opposite, remember it.
+  // Theme switch: each labelled option sets an explicit choice and remembers it.
   (function () {
     var root = document.documentElement;
-    var mq = window.matchMedia("(prefers-color-scheme: dark)");
-    function effective() {
-      var attr = root.getAttribute("data-theme");
-      return attr || (mq.matches ? "dark" : "light");
-    }
-    document.getElementById("theme-toggle").addEventListener("click", function () {
-      var next = effective() === "dark" ? "light" : "dark";
-      root.setAttribute("data-theme", next);
-      try { localStorage.setItem("theme", next); } catch (e) {}
+    document.querySelectorAll(".ts-opt").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var choice = btn.getAttribute("data-theme-choice");
+        root.setAttribute("data-theme", choice);
+        try { localStorage.setItem("theme", choice); } catch (e) {}
+      });
     });
   })();
 </script>

@@ -7,6 +7,9 @@
   --card: #ffffff;
   --btn-hover: #383838;
   --cover-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+  --switch-track: rgba(0, 0, 0, 0.05);
+  --switch-thumb: #ffffff;
+  --switch-thumb-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
   --max-width: 1080px;
 }
 
@@ -25,6 +28,9 @@
     --card: #0a0a0a;
     --btn-hover: #cccccc;
     --cover-shadow: 0 18px 44px rgba(0, 0, 0, 0.6);
+    --switch-track: rgba(255, 255, 255, 0.08);
+    --switch-thumb: #303030;
+    --switch-thumb-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
   }
 }
 :root[data-theme="dark"] {
@@ -36,6 +42,9 @@
   --card: #0a0a0a;
   --btn-hover: #cccccc;
   --cover-shadow: 0 18px 44px rgba(0, 0, 0, 0.6);
+  --switch-track: rgba(255, 255, 255, 0.08);
+  --switch-thumb: #303030;
+  --switch-thumb-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 * { box-sizing: border-box; }
@@ -94,35 +103,60 @@ a { color: inherit; }
 }
 .site-header nav a:hover { color: var(--foreground); }
 
-/* Theme toggle — sits after "Books" in the nav, styled like a nav link.
-   The icon it shows reflects the *effective* theme via CSS alone: a moon in
-   light mode (tap to go dark), a sun in dark mode (tap to go light). */
-.theme-toggle {
-  margin-left: 22px;
+/* Theme switch — an Apple-style sliding pill with "light" / "dark" labels,
+   centred above the opening line. The thumb position and which label reads as
+   active are driven purely by the *effective* theme, matching the palette:
+   default/forced-light = thumb left over "light"; effective-dark = thumb right
+   over "dark". The buttons themselves set the explicit choice. */
+.theme-switch {
+  position: relative;
+  display: inline-flex;
   padding: 4px;
+  margin: 0 0 20px;
+  border-radius: 999px;
+  background: var(--switch-track);
+}
+.ts-opt {
+  position: relative;
+  z-index: 1;
+  width: 62px;
+  padding: 6px 0;
   border: 0;
   background: none;
-  color: var(--muted);
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  vertical-align: middle;
-  transition: color 0.15s ease;
+  font: inherit;
+  font-size: 0.82rem;
+  letter-spacing: 0.01em;
+  color: var(--faint);
+  transition: color 0.2s ease;
 }
-.theme-toggle:hover { color: var(--foreground); }
-.theme-toggle svg { width: 18px; height: 18px; display: block; }
-/* Default (light OS, no choice) and forced-light: show moon, hide sun. */
-.theme-toggle .icon-sun { display: none; }
-.theme-toggle .icon-moon { display: block; }
-/* Effective dark: show sun, hide moon. */
+.ts-thumb {
+  position: absolute;
+  z-index: 0;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: 62px;
+  border-radius: 999px;
+  background: var(--switch-thumb);
+  box-shadow: var(--switch-thumb-shadow);
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* Default (light OS, no choice) and forced-light: thumb left, "light" active. */
+.ts-light { color: var(--foreground); }
+/* Effective dark: slide thumb right, make "dark" the active label. */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .theme-toggle .icon-sun { display: block; }
-  :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
+  :root:not([data-theme="light"]) .ts-thumb { transform: translateX(62px); }
+  :root:not([data-theme="light"]) .ts-light { color: var(--faint); }
+  :root:not([data-theme="light"]) .ts-dark { color: var(--foreground); }
 }
-:root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
-:root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
-:root[data-theme="light"] .theme-toggle .icon-sun { display: none; }
-:root[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+:root[data-theme="dark"] .ts-thumb { transform: translateX(62px); }
+:root[data-theme="dark"] .ts-light { color: var(--faint); }
+:root[data-theme="dark"] .ts-dark { color: var(--foreground); }
+/* Forced light must win over a dark OS: reset to the default appearance. */
+:root[data-theme="light"] .ts-thumb { transform: translateX(0); }
+:root[data-theme="light"] .ts-light { color: var(--foreground); }
+:root[data-theme="light"] .ts-dark { color: var(--faint); }
 
 /* Intro */
 .intro {
