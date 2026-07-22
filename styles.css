@@ -59,7 +59,7 @@ a { color: inherit; }
   align-items: center;
 }
 .brand {
-  font-weight: 450;
+  font-weight: 400;
   font-size: 1.02rem;
   letter-spacing: 0.01em;
   color: var(--muted);
