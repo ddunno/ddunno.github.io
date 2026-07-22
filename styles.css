@@ -99,6 +99,13 @@ a { color: inherit; }
 /* Book sections */
 .books {
   padding: 56px 0 24px;
+}
+/* Flex lives on the inner wrap, not the section: putting it on the section
+   made the auto-margined .wrap shrink to its content (~1003px) instead of the
+   full 1080px container, so the cards sat inset from the header. Here the wrap
+   keeps its 1080px width and the cards stretch to it, aligning with the header;
+   the gap also now spaces the two cards (its previous target was the lone wrap). */
+.books .wrap {
   display: flex;
   flex-direction: column;
   gap: 28px;
