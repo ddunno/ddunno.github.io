@@ -139,26 +139,6 @@ a { color: inherit; }
 :root[data-theme="dark"] .ts-light { color: var(--faint); }
 :root[data-theme="dark"] .ts-dark { color: var(--foreground); }
 
-/* Intro */
-.intro {
-  padding: 96px 0 24px;
-  text-align: center;
-}
-.intro h1 {
-  font-size: 3rem;
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  line-height: 1.05;
-  margin: 0 0 16px;
-}
-.intro p {
-  font-size: 1.25rem;
-  color: var(--muted);
-  max-width: 34ch;
-  margin: 0 auto;
-  text-wrap: balance;
-}
-
 /* Book sections */
 .books {
   padding: 56px 0 24px;
@@ -198,14 +178,6 @@ a { color: inherit; }
   box-shadow: var(--cover-shadow);
 }
 
-.book-kicker {
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  font-size: 0.72rem;
-  color: var(--faint);
-  font-weight: 300;
-  margin: 0 0 10px;
-}
 .book-title {
   font-size: 2.1rem;
   font-weight: 400;
@@ -241,15 +213,6 @@ a { color: inherit; }
   background: var(--btn-hover);
   transform: translateY(-1px);
 }
-.buy-btn-disabled {
-  background: color-mix(in srgb, var(--foreground) 6%, transparent);
-  color: var(--faint);
-  cursor: default;
-}
-.buy-btn-disabled:hover {
-  background: color-mix(in srgb, var(--foreground) 6%, transparent);
-  transform: none;
-}
 
 /* About — a quiet opening line */
 .about {
@@ -279,8 +242,6 @@ a { color: inherit; }
 
 /* Responsive */
 @media (max-width: 720px) {
-  .intro { padding: 64px 0 8px; }
-  .intro h1 { font-size: 2.3rem; }
   .book-card { padding: 28px; border-radius: 20px; }
   .book-grid, .book-grid.reverse {
     grid-template-columns: 1fr;
